@@ -5,11 +5,45 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="crypto, dca, dca calculator">
-    <link rel="stylesheet" href="style.css">
-    <title></title>
+    <link rel="stylesheet" href="">
+    <title>Crypto DCA Calculator</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
-<body>
+<body onload="load();">
 
-    <script src=""></script>
+    <h1>
+        This is a crypto DCA calculator
+    </h1>
+
+    <form onsubmit="return calculate();" method="">
+        <label for="date">I started DCA-ing on </label><input type="date" name="date" id="date"> <br />
+
+        <label for="coin">Into </label>
+        <select name="coin">
+            <option value="bitcoin">Bitcoin</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="tether">Tether</option>
+            <option value="binancecoin">BNB</option>
+            <option value="ripple">XRP</option>
+            <option value="cardano">Cardano</option>
+        </select> <br />
+
+        <label for="amount">Amount </label><input type="number" min="0" step="any" value="100" name="amount">$ <br />
+
+        <label for="time">And was repeating it every</label>
+        <select name="time">
+            <option value="day">day</option>
+            <option value="week">week</option>
+            <option value="month" selected>month</option>
+            <option value="quarter">quarter</option>
+            <option value="year">year</option>
+        </select>
+        <br />
+        <input type="submit" value="Calculate">
+    </form>
+
+    <div id="result">
+    </div>
+    <script src="calculator.js"></script>
 </body>
 </html>
