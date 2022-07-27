@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "@types/jquery": "^3.5.14"
+  },
+  "dependencies": {
+    "@types/bootstrap": "^5.2.0",
+    "@types/google.visualization": "^0.0.68",
+    "jquery": "^3.6.0"
+  }
+}
