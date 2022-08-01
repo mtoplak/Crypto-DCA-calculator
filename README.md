@@ -2,10 +2,10 @@
 This calculator shows how effective your "dollar cost average" investment strategy is.
 
 ### Built With
+- [![Typescript][Ts.com]][Ts-url]
 - [![Html][Html.com]][Html-url]
 - [![Css][Css.com]][Css-url]
 - [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-- [![Javascript][Javascript.com]][Javascript-url]
 - [![JQuery][JQuery.com]][JQuery-url]
 
 - Coingecko API
@@ -25,4 +25,6 @@ Project Link: [https://github.com/mtoplak/Crypto-DCA-calculator](https://github.
 [Bootstrap.com]: https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
-[JQuery-url]: https://jquery.com 
+[JQuery-url]: https://jquery.com
+[Ts.com]: https://img.shields.io/badge/typescript-357bc4?style=for-the-badge&logo=typescript&logoColor=white
+[Ts-url]: https://www.typescriptlang.org/
