@@ -1,4 +1,4 @@
-function calculate(startDate: string, cryptocurrency: string, purchaseAmount: number, frequency: string): boolean { //startDate maybe any?
+function calculate(startDate: string, cryptocurrency: string, purchaseAmount: number, frequency: string): boolean {
     $('#result').html('<h3>I have spent a total of <span id="total" class="strong"></span>$ on <span id="coinamount" class="strong"></span> <span class="coin" class="strong"></span> since <span id="startdate" class="strong"></span>.<div id="second"></div> <div id="third"> My total investment is <span id="profit" class="strong"></span> and I have invested <span id="times" class="strong"></span> times. My average buy price was <span id="average" class="strong"></span>$.</div></h3>');
     $('#share-button').html(`Share the results: <button id='copy' data-toggle='tooltip' data-placement='top' title='Copy' onclick='share();'><img src='icons/copy.png'></button>`);
     try {
@@ -19,17 +19,17 @@ function calculate(startDate: string, cryptocurrency: string, purchaseAmount: nu
 function load(): void {
     if (localStorage.getItem('startDate') != null) {
         let startDate: any = localStorage.getItem('startDate');
-        let cryptocurrency: string = localStorage.getItem('cryptocurrency')!; // !
-        let purchaseAmount: number = +localStorage.getItem('purchaseAmount')!; // !
-        let frequency: string = localStorage.getItem('frequency')!; // !
+        let cryptocurrency: string = localStorage.getItem('cryptocurrency')!;
+        let purchaseAmount: number = +localStorage.getItem('purchaseAmount')!;
+        let frequency: string = localStorage.getItem('frequency')!;
         calculate(startDate, cryptocurrency, purchaseAmount, frequency);
         startDate = Date.parse(startDate);
         startDate = new Date(startDate);
         startDate = startDate.toISOString();
-        (<HTMLInputElement>document.forms[0][0]).value = startDate.slice(0, 10); // ???
-        (<HTMLInputElement>document.forms[0][1]).value = cryptocurrency; // ???
-        (<HTMLInputElement>document.forms[0][2]).value = purchaseAmount as unknown as string; // ????
-        (<HTMLInputElement>document.forms[0][3]).value = frequency; // ???
+        (<HTMLInputElement>document.forms[0][0]).value = startDate.slice(0, 10);
+        (<HTMLInputElement>document.forms[0][1]).value = cryptocurrency;
+        (<HTMLInputElement>document.forms[0][2]).value = purchaseAmount as unknown as string;
+        (<HTMLInputElement>document.forms[0][3]).value = frequency;
     }
     else {
         $('#date').val(new Date().toISOString().slice(0, 10));
@@ -37,14 +37,14 @@ function load(): void {
 }
 
 var current: number;
-async function calculateTimes(startDate?: string, cryptocurrency?: string, purchaseAmount?: number, frequency?: string): Promise<void> { //startDate bi mogoče moral bit any?
+async function calculateTimes(startDate?: string, cryptocurrency?: string, purchaseAmount?: number, frequency?: string): Promise<void> {
     let start: any;
     let coin: string;
     let amount: any;
     let time: string;
 
-    !startDate ? start = (<HTMLInputElement>document.forms[0][0]).value : start = startDate; // ???
-    !frequency ? time = (<HTMLInputElement>document.forms[0][3]).value : time = frequency; // ???
+    !startDate ? start = (<HTMLInputElement>document.forms[0][0]).value : start = startDate;
+    !frequency ? time = (<HTMLInputElement>document.forms[0][3]).value : time = frequency;
 
     let day: number | string;
     let month: number | string;
@@ -70,7 +70,7 @@ async function calculateTimes(startDate?: string, cryptocurrency?: string, purch
 
     let firstDate: string = day + '-' + month + '-' + year;
     myDates.push(firstDate);
-    !purchaseAmount ? amount = (document.forms[0][2] as HTMLInputElement).value : amount = purchaseAmount; //*1 pri value je šlo vstran
+    !purchaseAmount ? amount = (document.forms[0][2] as HTMLInputElement).value : amount = purchaseAmount;
     let today: any = new Date();
     month = today.getMonth() + 1;
     year = today.getFullYear();
@@ -113,24 +113,22 @@ async function calculateTimes(startDate?: string, cryptocurrency?: string, purch
     }
 
     do {
-        !cryptocurrency ? coin = (<HTMLInputElement>document.forms[0][1]).value : coin = cryptocurrency; // ???
+        !cryptocurrency ? coin = (<HTMLInputElement>document.forms[0][1]).value : coin = cryptocurrency;
         localStorage.setItem('cryptocurrency', coin);
 
         const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`, { method: 'GET' });
-        const podatek = await response.json();
-        current = podatek[coin].usd;
+        const data = await response.json();
+        current = data[coin].usd;
 
         if (Date.parse(start) == Date.parse(today)) {
             !cryptocurrency ? coin = (<HTMLInputElement>document.forms[0][1]).value : coin = cryptocurrency;
             localStorage.setItem('cryptocurrency', coin);
 
-            console.log(coin);
-
             const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`, { method: 'GET' });
-            const podatek = await response.json();
-            const price = podatek[coin].usd;
-            current = podatek[coin].usd;
-            cryptoAmount += amount / podatek[coin].usd;
+            const data = await response.json();
+            const price = data[coin].usd;
+            current = data[coin].usd;
+            cryptoAmount += amount / data[coin].usd;
             myPrices.push(price);
             accAmounts.push(cryptoAmount);
             $('#coinamount').text(cryptoAmount.toFixed(4));
@@ -170,15 +168,15 @@ async function calculateTimes(startDate?: string, cryptocurrency?: string, purch
 
             start = year + '-' + month + '-' + day;
             count++;
-            !cryptocurrency ? coin = (<HTMLInputElement>document.forms[0][1]).value : coin = cryptocurrency; // ???
+            !cryptocurrency ? coin = (<HTMLInputElement>document.forms[0][1]).value : coin = cryptocurrency;
             localStorage.setItem('cryptocurrency', coin);
             date = day + '-' + month + '-' + start.substr(0, 4);
 
             const response = await fetch(`https://api.coingecko.com/api/v3/coins/${coin}/history?date=${date}&localization=false`, { method: 'GET' });
-            const podatek = await response.json();
-            const price = await podatek.market_data.current_price.usd;
+            const data = await response.json();
+            const price = await data.market_data.current_price.usd;
             myPrices.push(price);
-            cryptoAmount += amount / podatek.market_data.current_price.usd;
+            cryptoAmount += amount / data.market_data.current_price.usd;
             accAmounts.push(cryptoAmount);
             $('#coinamount').text(cryptoAmount.toFixed(4));
             $('#amount').html(`<div class="input-form-group"><span class="title1">Amount Acquired</span><br />${cryptoAmount.toFixed(4)} <span class="coin"></span></div>`);
@@ -200,7 +198,7 @@ async function calculateTimes(startDate?: string, cryptocurrency?: string, purch
             $('#averageBuyPrice').html(`<div class='input-form-group'><span class="title1">Average Buy Price</span><br />${(sum / myPrices.length).toFixed(2)}$</div>`);
             showResults(count, cryptoAmount, amount, coin);
 
-            if ((Date.parse(today) - Date.parse(start)) < meantime!) { //!
+            if ((Date.parse(today) - Date.parse(start)) < meantime!) {
                 showResults(count, cryptoAmount, amount, coin);
                 break;
             }
@@ -231,11 +229,11 @@ async function calculateTimes(startDate?: string, cryptocurrency?: string, purch
 
             if (Date.parse(start) == Date.parse(today)) {
                 const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`, { method: 'GET' });
-                const podatek = await response.json();
-                const price = await podatek[coin].usd;
-                current = podatek[coin].usd;
+                const data = await response.json();
+                const price = await data[coin].usd;
+                current = data[coin].usd;
                 myPrices.push(price);
-                cryptoAmount += amount / podatek[coin].usd;
+                cryptoAmount += amount / data[coin].usd;
                 accAmounts.push(cryptoAmount);
                 $('#coinamount').text(cryptoAmount.toFixed(4));
                 $('#amount').html(`<div class="input-form-group"><span class="title1">Amount Acquired</span><br />${cryptoAmount.toFixed(4)} <span class="coin"></span></div>`);
@@ -266,7 +264,7 @@ async function calculateTimes(startDate?: string, cryptocurrency?: string, purch
         }
     }
     while (true);
-    //return false; function returns a promise
+    //return false; function returns a promise!
 }
 
 async function showResults(count: number, cryptoAmount: number, amount: number, coin: string): Promise<void> {
@@ -310,9 +308,9 @@ async function showResults(count: number, cryptoAmount: number, amount: number, 
 
     if (current == NaN) {
         const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coin}&vs_currencies=usd`, { method: 'GET' });
-        const podatek = await response.json();
-        current = podatek[coin].usd;
-        cryptoAmount += amount / podatek[coin].usd;
+        const data = await response.json();
+        current = data[coin].usd;
+        cryptoAmount += amount / data[coin].usd;
         $('#coinamount').text(cryptoAmount.toFixed(4));
         $('#amount').html(`<div class="input-form-group"><span class="title1">Amount Acquired</span><br />${cryptoAmount.toFixed(4)} <span class="coin"></span></div>`);
     }
@@ -333,7 +331,7 @@ async function showResults(count: number, cryptoAmount: number, amount: number, 
         $('#second').hide();
         $('#third').show();
     }
-    let startD = (<HTMLInputElement>document.forms[0][0]).value; // ???
+    let startD = (<HTMLInputElement>document.forms[0][0]).value;
     startD = startD.substr(8, 10) + "/" + startD.substring(5, 7) + "/" + startD.substr(0, 4);
     $("#startdate").text(startD);
     $('#twitter').html(`<a href="https://twitter.com/share?text=${$('#result').text()}"><img src="icons/twitter.png" data-toggle='tooltip' data-placement='top' title="Tweet"></a>`);
@@ -379,7 +377,6 @@ function drawChart(myDates: string[], myPrices: number[], accAmounts: number[]):
         },
         backgroundColor: '#242535',
         legend: 'none',
-        //vAxis: {minValue: 0, viewWindow: {min: 0}}, prestavljeno dol
         hAxis: {
             textStyle: {
                 color: '#d6d2de',
@@ -406,7 +403,7 @@ function drawChart(myDates: string[], myPrices: number[], accAmounts: number[]):
         chartArea: { width: "80%", height: "80%" }
     };
 
-    var chart = new google.visualization.LineChart(document.getElementById('curve_chart')!); // !
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart')!);
     chart.draw(data, options);
 }
 
@@ -425,7 +422,6 @@ function addOneMonth(start: any): Date {
 
 function addAQuarter(start: any): Date {
     start = new Date(start);
-    console.log(start.getMonth() + 2);
     let month: number = start.getMonth() + 5;
     let year: number = start.getFullYear();
     if (month == 13) {
@@ -445,8 +441,6 @@ function addAQuarter(start: any): Date {
         year = start.getFullYear() + 1;
     }
     start = year + '-' + month + '-' + start.getDate();
-    console.log(start);
     start = new Date(start);
-    console.log(start);
     return start;
 }
