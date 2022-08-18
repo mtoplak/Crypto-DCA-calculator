@@ -11,6 +11,15 @@ This calculator shows how effective your "dollar cost average" investment strate
 - Coingecko API
 - Google Charts API
 
+### How to use
+
+Use the following two commands in the root directory:
+1. ``` $ npm install```
+2. ``` $ tsc ```
+3. Open ``` index.html ``` in your browser
+4. See why you should invest money!
+
+
 ### Contact
 Project Link: [https://github.com/mtoplak/Crypto-DCA-calculator](https://github.com/mtoplak/Crypto-DCA-calculator).
 
