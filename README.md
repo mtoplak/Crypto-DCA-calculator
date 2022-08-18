@@ -1,6 +1,9 @@
 # Crypto-DCA-calculator
 This calculator shows how effective your "dollar cost average" investment strategy is.
 
+![Screenshot](screenshot.png)
+
+
 ### Built With
 - [![Typescript][Ts.com]][Ts-url]
 - [![Html][Html.com]][Html-url]
