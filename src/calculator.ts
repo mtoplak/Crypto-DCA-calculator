@@ -24,6 +24,7 @@ function calculate(
 }
 
 function load(): void {
+    $('#twitter').hide();
     if (localStorage.getItem("startDate") != null) {
         let startDate: any = localStorage.getItem("startDate");
         let cryptocurrency: string = localStorage.getItem("cryptocurrency")!;
@@ -54,6 +55,7 @@ async function calculateTimes(
     let coin: string;
     let amount: any;
     let time: string;
+    $('#twitter').show();
 
     !startDate
         ? (start = (<HTMLInputElement>document.forms[0][0]).value)
